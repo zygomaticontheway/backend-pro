@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/homework/HW1/HW1.iml" filepath="$PROJECT_DIR$/homework/HW1/HW1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/backend-PRO.iml" filepath="$PROJECT_DIR$/.idea/backend-PRO.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend_First/backend_First.iml" filepath="$PROJECT_DIR$/backend_First/backend_First.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson02/demo20240808_counter/demo20240808_counter.iml" filepath="$PROJECT_DIR$/lesson02/demo20240808_counter/demo20240808_counter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson02/demo_spring_intro/demo_spring_intro.iml" filepath="$PROJECT_DIR$/lesson02/demo_spring_intro/demo_spring_intro.iml" />
     </modules>
   </component>
 </project>
