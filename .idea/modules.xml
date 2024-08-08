@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/backend-PRO.iml" filepath="$PROJECT_DIR$/.idea/backend-PRO.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson02/demo20240808_counter/demo20240808_counter.iml" filepath="$PROJECT_DIR$/lesson02/demo20240808_counter/demo20240808_counter.iml" />
       <module fileurl="file://$PROJECT_DIR$/lesson02/demo_spring_intro/demo_spring_intro.iml" filepath="$PROJECT_DIR$/lesson02/demo_spring_intro/demo_spring_intro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consultation01/exceptions/exceptions.iml" filepath="$PROJECT_DIR$/consultation01/exceptions/exceptions.iml" />
     </modules>
   </component>
 </project>
