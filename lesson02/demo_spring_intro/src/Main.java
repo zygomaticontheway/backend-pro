@@ -1,3 +1,4 @@
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import staff.administration.Director;
 import staff.administration.ProductionChief;
 import staff.administration.SalesChief;
@@ -9,23 +10,32 @@ import staff.production.StoreKeeper;
 public class Main {
     public static void main(String[] args) {
 
-        MachineOperator machineOperator = new MachineOperator();
-        Merchandiser merchandiser = new Merchandiser();
-        SalesManager salesManager = new SalesManager();
-        StoreKeeper storeKeeper = new StoreKeeper();
+//        MachineOperator machineOperator = new MachineOperator();
+//        Merchandiser merchandiser = new Merchandiser();
+//        SalesManager salesManager = new SalesManager();
+//        StoreKeeper storeKeeper = new StoreKeeper();
+//
+//        ProductionChief productionChief = new ProductionChief();
+//            productionChief.setMachineOperator(machineOperator);
+//            productionChief.setStoreKeeper(storeKeeper);
+//
+//        SalesChief salesChief = new SalesChief();
+//            salesChief.setSalesManager(salesManager);
+//            salesChief.setMerchandiser(merchandiser);
+//
+//        Director director = new Director();
+//            director.setProductionChief(productionChief);
+//            director.setSalesChief(salesChief);
+//
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(".configuration");
 
-        ProductionChief productionChief = new ProductionChief();
-            productionChief.setMachineOperator(machineOperator);
-            productionChief.setStoreKeeper(storeKeeper);
+        // вызов бина по классу, объект рефлексии
+//        Director director = context.getBean(Director.class);
 
-        SalesChief salesChief = new SalesChief();
-            salesChief.setSalesManager(salesManager);
-            salesChief.setMerchandiser(merchandiser);
+        // вызов бина по имени, нужно привести тип
+        Director director = (Director) context.getBean("director");
 
-        Director director = new Director();
-            director.setProductionChief(productionChief);
-            director.setSalesChief(salesChief);
-
-            director.manageCompany();
+        director.manageCompany();
+        
     }
 }
