@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.Arrays.stream;
+
 @Component
 public class BookRepositoryImp implements code.repository.BookRepository {
 
@@ -24,17 +26,17 @@ public class BookRepositoryImp implements code.repository.BookRepository {
     public Book save(Book book) {
         return null;
     }
-    public Book getBookById(String id) {
-        return findAll()
-                .stream()
-                .filter(book -> book.getId().equals(id))
-                .findAny()
-                .get();
-    }
 
     @Override
     public Book delete(Book book) {
         return null;
     }
 
-}
+    public Book getBookById(String id) {
+        return findAll()
+                .stream()
+                .filter(book -> book.getId().contains(id))
+                .findAny()
+                .get();
+         }
+    };

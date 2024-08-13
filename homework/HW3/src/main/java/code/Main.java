@@ -10,6 +10,6 @@ public class Main {
         BookController controller = context.getBean(BookController.class);
 
         System.out.println(controller.getAllBooks());
-        System.out.println(controller.getBookById("978-0743273565"));
+        System.out.println(controller.getBookById("978-0451524935"));
     }
 }
