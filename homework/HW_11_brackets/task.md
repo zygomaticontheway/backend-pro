@@ -1,0 +1,1 @@
+Print all possible bracket pairs combinations of inputed amount of pairs.
