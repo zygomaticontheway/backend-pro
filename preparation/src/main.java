@@ -7,6 +7,7 @@ public class main {
         fizzBuzz(32);
 
         int[] array = {-123, 10, 12, 1, 2, 3, 4, 5, 5, 6, 6, 7};
+        int[] pairedArray = {2, 2, 8, 8, 5, 6, 6, 7, 5, 7, 8,6};
 
         System.out.println(secondLargestNumber(array));
 
@@ -18,6 +19,7 @@ public class main {
 
         System.out.println(Arrays.toString(arrayTurning(array, 29)));
 
+        System.out.println("Unpaired element: " + unpairedElement(pairedArray));
 
     }
 
@@ -242,11 +244,27 @@ the function should return 7, as explained in the example above.
             throw new IllegalArgumentException("The Array is empty");
         }
 
-        int unpairedElement = 0;
-        int[] output = Arrays.stream(A).sorted().toArray();
+        if (A.length == 1) {
+            return A[0];
+        }
+        if (A.length == 2) {
+            return -1;
+        }
 
-        return unpairedElement;
+        int[] sortedArray = Arrays.stream(A).sorted().toArray();
+
+        for( int x : sortedArray ) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < sortedArray.length -2; i++) {
+            if (sortedArray[i] != sortedArray[i+1]){
+                return sortedArray[i];
+            }
+            i++;
+        }
+        return sortedArray[sortedArray.length-1];
     }
-
 
 }
