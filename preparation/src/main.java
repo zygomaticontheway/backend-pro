@@ -16,6 +16,8 @@ public class main {
 
         System.out.println(binaryGap(66561));
 
+        System.out.println(Arrays.toString(arrayTurning(array, 29)));
+
 
     }
 
@@ -108,6 +110,8 @@ public class main {
         return res;
     }
 
+    //codility.com
+
     /*
 Write a function:
     class Solution { public int solution(int[] A); }
@@ -186,4 +190,41 @@ that, given a positive integer N, returns the length of its longest binary gap. 
         }
         return maxGap;
     }
+
+    /*
+    Write a function:
+    class Solution { public int[] solution(int[] A, int K); }
+that, given an array A consisting of N integers and an integer K, returns the array A rotated K times.
+For example, given
+    A = [3, 8, 9, 7, 6]
+    K = 3
+the function should return [9, 7, 6, 3, 8]. Three rotations were made:
+    [3, 8, 9, 7, 6] -> [6, 3, 8, 9, 7]
+    [6, 3, 8, 9, 7] -> [7, 6, 3, 8, 9]
+    [7, 6, 3, 8, 9] -> [9, 7, 6, 3, 8]
+
+    Assume that:
+        N and K are integers within the range [0..100];
+        each element of array A is an integer within the range [−1,000..1,000].
+     */
+    public static int[] arrayTurning (int[] A, int K) {
+        if (K < 0 || K > 100) {
+            throw new IllegalArgumentException("Rotate amount is out of range");
+        }
+        if (A == null || A.length == 0) {
+            throw new IllegalArgumentException("Array must not be empty");
+        }
+
+        int [] newA = new int[A.length];
+        int offset = K%A.length;
+
+        for (int i = 0; i < A.length; i++){
+            int index = i + offset;
+            int newIndex = (index < A.length ?  index : index - A.length);
+            newA[newIndex] = A[i];
+        }
+        return newA;
+    }
+
+
 }
