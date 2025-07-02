@@ -212,11 +212,11 @@ the function should return [9, 7, 6, 3, 8]. Three rotations were made:
             throw new IllegalArgumentException("Rotate amount is out of range");
         }
         if (A == null || A.length == 0) {
-            throw new IllegalArgumentException("Array must not be empty");
+            return A;
         }
 
         int [] newA = new int[A.length];
-        int offset = K%A.length;
+        int offset = K % A.length;
 
         for (int i = 0; i < A.length; i++){
             int index = i + offset;
@@ -224,6 +224,28 @@ the function should return [9, 7, 6, 3, 8]. Three rotations were made:
             newA[newIndex] = A[i];
         }
         return newA;
+    }
+
+    /*
+    Write a function:
+    class Solution { public int solution(int[] A); }
+that, given an array A consisting of N integers fulfilling the above conditions, returns the value of the unpaired element.
+For example, given array A such that:
+  A[0] = 9  A[1] = 3  A[2] = 9
+  A[3] = 3  A[4] = 9  A[5] = 7
+  A[6] = 9
+the function should return 7, as explained in the example above.
+     */
+
+    public static int unpairedElement (int [] A){
+        if (A == null || A.length == 0) {
+            throw new IllegalArgumentException("The Array is empty");
+        }
+
+        int unpairedElement = 0;
+        int[] output = Arrays.stream(A).sorted().toArray();
+
+        return unpairedElement;
     }
 
 
