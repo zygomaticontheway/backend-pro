@@ -287,15 +287,15 @@ that, given three integers X, Y and D, returns the minimal number of jumps from 
             return 0;
         }
 
-        System.out.println("distance: " + distance);
+//        System.out.println("distance: " + distance);
         double clearJumps = (double) distance / D;
-        System.out.println("clearJumps: " + clearJumps);
-        int jumps = (int) Math.ceil(clearJumps); // не сработало
-//        int jumps = ((distance % D) + distance) / D;
-        int restDiv = distance % D;
-        System.out.println("restDiv: " + restDiv);
-        System.out.println("From " + X + " to " + Y + " with power " + D);
+//        System.out.println("clearJumps: " + clearJumps);
+        // не сработало
+        //        int jumps = ((distance % D) + distance) / D;
+//        int restDiv = distance % D;
+//        System.out.println("restDiv: " + restDiv);
+//        System.out.println("From " + X + " to " + Y + " with power " + D);
 
-        return jumps;
+        return (int) Math.ceil(clearJumps);
     }
 }
