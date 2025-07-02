@@ -21,6 +21,7 @@ public class main {
 
         System.out.println("Unpaired element: " + unpairedElement(pairedArray));
 
+        System.out.println("Frog needs " + frogJmp(10, 85, 300) + " jumps" );
     }
 
     public static long factorial(int a) {
@@ -267,4 +268,34 @@ the function should return 7, as explained in the example above.
         return sortedArray[sortedArray.length-1];
     }
 
+    /*
+    A small frog wants to get to the other side of the road. The frog is currently located at position X and wants to get to a position greater than or equal to Y. The small frog always jumps a fixed distance, D.
+Count the minimal number of jumps that the small frog must perform to reach its target.
+Write a function:
+    class Solution { public int solution(int X, int Y, int D); }
+that, given three integers X, Y and D, returns the minimal number of jumps from position X to a position equal to or greater than Y.
+     */
+    public static int frogJmp(int X, int Y, int D) {
+
+        int distance = Y - X;
+
+        if (D <= 0){
+            throw new IllegalArgumentException("Frog is dead, it can't jump");
+        }
+
+        if (distance <=0) {
+            return 0;
+        }
+
+        System.out.println("distance: " + distance);
+        double clearJumps = (double) distance / D;
+        System.out.println("clearJumps: " + clearJumps);
+        int jumps = (int) Math.ceil(clearJumps); // не сработало
+//        int jumps = ((distance % D) + distance) / D;
+        int restDiv = distance % D;
+        System.out.println("restDiv: " + restDiv);
+        System.out.println("From " + X + " to " + Y + " with power " + D);
+
+        return jumps;
+    }
 }
