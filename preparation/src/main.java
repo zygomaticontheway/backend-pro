@@ -1,27 +1,34 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class main {
     public static void main(String[] args) {
-        System.out.println(factorial(3));
-        System.out.println(reverse("i want cookies"));
-        fizzBuzz(32);
+//        System.out.println(factorial(3));
+//        System.out.println(reverse("i want cookies"));
+//        fizzBuzz(32);
 
         int[] array = {-123, 10, 12, 1, 2, 3, 4, 5, 5, 6, 6, 7};
         int[] pairedArray = {2, 2, 8, 8, 5, 6, 6, 7, 5, 7, 8,6};
+        int [] missingNrArray = {2, 4, 3, 6, 1, 0};
 
-        System.out.println(secondLargestNumber(array));
+//        System.out.println(secondLargestNumber(array));
+//
+//        System.out.println(removeDuplicates("aAnttttOn"));
+//
+//        System.out.println("Solution = " + solution(array));
+//
+//        System.out.println(binaryGap(66561));
+//
+//        System.out.println(Arrays.toString(arrayTurning(array, 29)));
+//
+//        System.out.println("Unpaired element: " + unpairedElement(pairedArray));
+//
+//        System.out.println("Frog needs " + frogJmp(10, 85, 300) + " jumps" );
 
-        System.out.println(removeDuplicates("aAnttttOn"));
+//        System.out.println("missingNr: " + missingNr(missingNrArray));
 
-        System.out.println("Solution = " + solution(array));
+//        System.out.println( frogRiverOne(3,array) ==-1 ? "Not enough leaves" : "Frog needs " + frogRiverOne(3,array) + " seconds to jump to the other side");
 
-        System.out.println(binaryGap(66561));
 
-        System.out.println(Arrays.toString(arrayTurning(array, 29)));
-
-        System.out.println("Unpaired element: " + unpairedElement(pairedArray));
-
-        System.out.println("Frog needs " + frogJmp(10, 85, 300) + " jumps" );
     }
 
     public static long factorial(int a) {
@@ -139,7 +146,6 @@ Write an efficient algorithm for the following assumptions:
             if (x == res) {
                 res += 1;
             }
-            ;
 //            System.out.println(res);
         }
 
@@ -298,4 +304,151 @@ that, given three integers X, Y and D, returns the minimal number of jumps from 
 
         return (int) Math.ceil(clearJumps);
     }
+    /*
+
+
+An array A consisting of N different integers is given. The array contains integers in the range [1..(N + 1)], which means that exactly one element is missing.
+Your goal is to find that missing element.
+Write a function:
+    class Solution { public int solution(int[] A); }
+that, given an array A, returns the value of the missing element.
+For example, given array A such that:
+  A[0] = 2
+  A[1] = 3
+  A[2] = 1
+  A[3] = 5
+the function should return 4, as it is the missing element.
+Write an efficient algorithm for the following assumptions:
+        N is an integer within the range [0..100,000];
+        the elements of A are all distinct;
+        each element of array A is an integer within the range [1..(N + 1)].
+     */
+    public static int missingNr (int[] A){
+
+        if (A == null || A.length == 0 || A.length == 1){
+            return 1;
+        }
+
+        int N = A.length;
+        long totalSum = (long)(N + 1) * (N + 2) / 2;
+        System.out.println("totalSum: " + totalSum);
+
+        long arraySum = 0;
+//        long arraySum = Arrays.stream(A).sum();
+        for (int value : A) {
+            arraySum += value;
+        }
+        System.out.println("arraySum: " + arraySum);
+
+        return (int)(totalSum - arraySum);
+    }
+
+    /*
+    1: OddOccurrencesInArray
+    Дан массив A из N целых чисел.
+    Все элементы встречаются чётное число раз, кроме одного, который встречается нечётное количество раз.
+    Найти этот единственный элемент.
+    Пример
+    A = [9, 3, 9, 3, 9, 7, 9] → вернуть 7
+     */
+//    Оптимальное решение (XOR):
+    public int oddOccurrencesInArray(int[] A) {
+        int result = 0;
+        for (int num : A) {
+            result ^= num; // побитовая операция XOR
+        }
+        return result;
+    }
+
+    /*
+    2: TapeEquilibrium
+    Дан массив A длины N.
+    Нужно найти минимальную разницу между суммами двух частей массива при любом разбиении:
+        левая часть A[0..P-1]
+        правая часть A[P..N-1]
+    вернуть минимальную разницу.
+     */
+    public int TapeEquilibrium(int[] A) {
+        long totalSum = Arrays.stream(A).sum();
+        long leftSum = 0;
+        long minDiff = Long.MAX_VALUE;
+
+        for (int i = 0; i < A.length - 1; i++) {
+            leftSum += A[i];
+            long rightSum = totalSum - leftSum;
+            long diff = Math.abs(leftSum - rightSum);
+            minDiff = Math.min(minDiff, diff);
+        }
+        return (int)minDiff;
+    }
+
+    /*
+FrogRiverOne
+    A small frog wants to get to the other side of a river. The frog is initially located on one bank of the river (position 0) and wants to get to the opposite bank (position X+1). Leaves fall from a tree onto the surface of the river.
+You are given an array A consisting of N integers representing the falling leaves. A[K] represents the position where one leaf falls at time K, measured in seconds.
+The goal is to find the earliest time when the frog can jump to the other side of the river. The frog can cross only when leaves appear at every position across the river from 1 to X (that is, we want to find the earliest moment when all the positions from 1 to X are covered by leaves). You may assume that the speed of the current in the river is negligibly small, i.e. the leaves do not change their positions once they fall in the river.
+For example, you are given integer X = 5 and array A such that:
+  A[0] = 1
+  A[1] = 3
+  A[2] = 1
+  A[3] = 4
+  A[4] = 2
+  A[5] = 3
+  A[6] = 5
+  A[7] = 4
+In second 6, a leaf falls into position 5. This is the earliest time when leaves appear in every position across the river.
+Write a function:
+    class Solution { public int solution(int X, int[] A); }
+that, given a non-empty array A consisting of N integers and integer X, returns the earliest time when the frog can jump to the other side of the river.
+If the frog is never able to jump to the other side of the river, the function should return −1.
+Write an efficient algorithm for the following assumptions:
+        N and X are integers within the range [1..100,000];
+        each element of array A is an integer within the range [1..X].
+     */
+
+    public static int frogRiverOne(int X, int[] A) {
+        if (A == null || A.length ==0 || X <= 0){
+            return -1;
+        }
+
+        int minTime = -1;
+
+        //1. All leaves are in template Array
+        //2. index of element, equals X <= max index of elements
+
+        List<Integer> templateArray = new ArrayList<>();
+        for (int i = 0; i < X; i++) {
+            templateArray.add(i+1);
+        }
+        for (int i = 0; i < A.length; i++) {
+            if (templateArray.isEmpty()) {
+                break;
+            }
+            if (templateArray.contains(A[i])){
+                minTime = i;
+//                System.out.println("min time: " + minTime);
+                templateArray.remove(Integer.valueOf(A[i]));
+//                System.out.println(templateArray);
+            }
+        }
+        if (!templateArray.isEmpty()){
+            return -1;
+        }
+        return minTime;
+    }
+
+    // frogRiverOneByGPT => HashSet
+    public int frogRiverOneByGPT(int X, int[] A) {
+        Set<Integer> positions = new HashSet<>();
+
+        for (int i = 0; i < A.length; i++) {
+            positions.add(A[i]);
+            if (positions.size() == X) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
 }
