@@ -1,3 +1,5 @@
+import com.sun.jdi.Value;
+
 import java.util.*;
 
 public class main {
@@ -9,6 +11,15 @@ public class main {
         int[] array = {-123, 10, 12, 1, 2, 3, 4, 5, 5, 6, 6, 7};
         int[] pairedArray = {2, 2, 8, 8, 5, 6, 6, 7, 5, 7, 8,6};
         int [] missingNrArray = {2, 4, 3, 6, 1, 0};
+        int [] progression = {12, 4, 6, 8, 10, 2};
+        int [] cars = {0,1,1,1,0,0,1};
+
+        System.out.println("passingCars opa: " + passingCars(cars));
+
+//        System.out.println("permCheck1: " + permCheck(array));
+//        System.out.println("permCheck2: " + permCheck(pairedArray));
+//        System.out.println("permCheck3: " + permCheck(progression));
+//        System.out.println("permCheckGPT: " + permCheckByGPT(progression));
 
 //        System.out.println(secondLargestNumber(array));
 //
@@ -304,9 +315,8 @@ that, given three integers X, Y and D, returns the minimal number of jumps from 
 
         return (int) Math.ceil(clearJumps);
     }
+
     /*
-
-
 An array A consisting of N different integers is given. The array contains integers in the range [1..(N + 1)], which means that exactly one element is missing.
 Your goal is to find that missing element.
 Write a function:
@@ -450,5 +460,217 @@ Write an efficient algorithm for the following assumptions:
         return -1;
     }
 
+    /*  PermCheck
+    ПРОГРЕССИЯ: a(n) = a(1) + (n-1)*d | S(n) = (a(1)+a(n))*n/2 | d = (a(n) - a(1))/(n-1)
+A non-empty array A consisting of N integers is given.
+A permutation is a sequence containing each element from 1 to N once, and only once.
+    Write a function:
+    class Solution { public int solution(int[] A); }
+that, given an array A, returns 1 if array A is a permutation and 0 if it is not.
+For example, given array A such that:
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+    A[3] = 2
+the function should return 1.
+Given array A such that:
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+the function should return 0.
+Write an efficient algorithm for the following assumptions:
+        N is an integer within the range [1..100,000];
+        each element of array A is an integer within the range [1..1,000,000,000].
+     */
+
+    public static int permCheck(int[] A){
+
+        Set<Integer> uniques = new HashSet<>();
+        for (int x : A){
+            uniques.add(x);
+        }
+        if (uniques.size() < A.length){
+            return 0;
+        }
+
+        int sum = Arrays.stream(A).sum();
+        int min = Arrays.stream(A).min().orElse(0);
+        int max = Arrays.stream(A).max().orElse(0);
+
+        if ((min + max)*A.length/2 == sum){
+            return 1;
+        }
+
+        return 0;
+    }
+// создать массив с индексами ибо каждый элемент
+    public static int permCheckByGPT(int[] A) {
+        int N = A.length;
+        boolean[] seen = new boolean[N + 1]; // индексы от 1 до N
+
+        for (int x : A) {
+            if (x < 1 || x > N) {
+                return 0; // элемент вне диапазона
+            }
+            if (seen[x]) {
+                return 0; // повтор
+            }
+            seen[x] = true;
+        }
+        return 1;
+    }
+
+    /* maxCounters
+You are given N counters, initially set to 0, and you have two possible operations on them:
+        increase(X) − counter X is increased by 1,
+        max counter − all counters are set to the maximum value of any counter.
+A non-empty array A of M integers is given. This array represents consecutive operations:
+        if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
+        if A[K] = N + 1 then operation K is max counter.
+For example, given integer N = 5 and array A such that:
+    A[0] = 3
+    A[1] = 4
+    A[2] = 4
+    A[3] = 6
+    A[4] = 1
+    A[5] = 4
+    A[6] = 4
+the values of the counters after each consecutive operation will be:
+    (0, 0, 1, 0, 0)
+    (0, 0, 1, 1, 0)
+    (0, 0, 1, 2, 0)
+    (2, 2, 2, 2, 2)
+    (3, 2, 2, 2, 2)
+    (3, 2, 2, 3, 2)
+    (3, 2, 2, 4, 2)
+The goal is to calculate the value of every counter after all operations.
+Write a function:
+    class Solution { public int[] solution(int N, int[] A); }
+that, given an integer N and a non-empty array A consisting of M integers, returns a sequence of integers representing the values of the counters.
+Result array should be returned as an array of integers.
+For example, given:
+    A[0] = 3
+    A[1] = 4
+    A[2] = 4
+    A[3] = 6
+    A[4] = 1
+    A[5] = 4
+    A[6] = 4
+the function should return [3, 2, 2, 4, 2], as explained above.
+Write an efficient algorithm for the following assumptions:
+        N and M are integers within the range [1..100,000];
+        each element of array A is an integer within the range [1..N + 1].
+     */
+    public int[] maxCounters(int N, int[] A){
+        int [] counters = new int[N];
+        int maxCounter = 0;
+
+        for (int i : A) {
+            if (1 <= i && i <= N) {
+                int counterIndex = i - 1;
+                counters[counterIndex] ++;
+                System.out.println("[A[j]-1] " + counterIndex);
+                if (maxCounter <= counters[counterIndex]) {
+                    maxCounter = counters[counterIndex];
+                }
+            } else if (i == N + 1) {
+                Arrays.fill(counters, maxCounter);
+            }
+        }
+        
+        return counters;
+    }
+
+    public int[] maxCountersByGPT (int N, int[] A){
+        int[] counters = new int[N];
+        int currentMax = 0;
+        int lastUpdate = 0;
+
+        for (int k : A) {
+            if (k >= 1 && k <= N) {
+                int index = k - 1;
+                if (counters[index] < lastUpdate) {
+                    counters[index] = lastUpdate;  // подтягиваем до минимального уровня
+                }
+                counters[index]++;
+                if (counters[index] > currentMax) {
+                    currentMax = counters[index];
+                }
+            } else if (k == N + 1) {
+                lastUpdate = currentMax; // откладываем массовое обновление
+            }
+        }
+
+        // окончательная синхронизация
+        for (int i = 0; i < N; i++) {
+            if (counters[i] < lastUpdate) {
+                counters[i] = lastUpdate;
+            }
+        }
+        return counters;
+    }
+
+    /* PassingCars
+A non-empty array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.
+Array A contains only 0s and/or 1s:
+        0 represents a car traveling east,
+        1 represents a car traveling west.
+The goal is to count passing cars. We say that a pair of cars (P, Q), where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+For example, consider array A such that:
+  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1
+We have five pairs of passing cars: (0, 1), (0, 3), (0, 4), (2, 3), (2, 4).
+Write a function:
+    class Solution { public int solution(int[] A); }
+that, given a non-empty array A of N integers, returns the number of pairs of passing cars.
+The function should return −1 if the number of pairs of passing cars exceeds 1,000,000,000.
+For example, given:
+  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1
+the function should return 5, as explained above.
+Write an efficient algorithm for the following assumptions:
+        N is an integer within the range [1..100,000];
+        each element of array A is an integer that can have one of the following values: 0, 1.
+     */
+
+    public static int passingCars(int[] A){
+        int passingCars = 0;
+
+        for (int i = 0; i < A.length; i++){
+            if (A[i] == 0){
+                int sum = Arrays.stream(A).skip(i).sum();
+                passingCars = passingCars + sum;
+                System.out.println("sum: " + sum);
+                System.out.println("passingCars: " + passingCars);
+            }
+        }
+//        List<Integer> nulls = Arrays.stream(A).filter().toList;
+
+        return passingCars;
+    }
+
+    public int passingCarsByGPT(int[] A) {
+        int eastCars = 0;
+        int passingCars = 0;
+
+        for (int car : A) {
+            if (car == 0) {
+                eastCars++;
+            } else { // car == 1
+                passingCars += eastCars;
+                if (passingCars > 1_000_000_000) {
+                    return -1;
+                }
+            }
+        }
+
+        return passingCars;
+    }
 
 }
