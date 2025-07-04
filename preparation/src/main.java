@@ -672,5 +672,96 @@ Write an efficient algorithm for the following assumptions:
 
         return passingCars;
     }
+/*
 
+MaxProductOfThree
+Maximize A[P] * A[Q] * A[R] for any triplet (P, Q, R).
+A non-empty array A consisting of N integers is given. The product of triplet (P, Q, R) equates to A[P] * A[Q] * A[R] (0 ≤ P < Q < R < N).
+For example, array A such that:
+  A[0] = -3
+  A[1] = 1
+  A[2] = 2
+  A[3] = -2
+  A[4] = 5
+  A[5] = 6
+contains the following example triplets:
+        (0, 1, 2), product is −3 * 1 * 2 = −6
+        (1, 2, 4), product is 1 * 2 * 5 = 10
+        (2, 4, 5), product is 2 * 5 * 6 = 60
+Your goal is to find the maximal product of any triplet.
+Write a function:
+    class Solution { public int solution(int[] A); }
+that, given a non-empty array A, returns the value of the maximal product of any triplet.
+For example, given array A such that:
+  A[0] = -3
+  A[1] = 1
+  A[2] = 2
+  A[3] = -2
+  A[4] = 5
+  A[5] = 6
+the function should return 60, as the product of triplet (2, 4, 5) is maximal.
+Write an efficient algorithm for the following assumptions:
+        N is an integer within the range [3..100,000];
+        each element of array A is an integer within the range [−1,000..1,000].
+
+** С сортировкой - порядок не важен **
+Arrays.sort(A);
+    int N = A.length;
+
+    int product1 = A[N - 1] * A[N - 2] * A[N - 3];
+    int product2 = A[0] * A[1] * A[N - 1];
+
+    return Math.max(product1, product2);
+** Порядок важен **
+        leftMax[j-1] * A[j] * rightMax[j+1]
+        leftMax[j-1] * A[j] * rightMin[j+1]
+        leftMin[j-1] * A[j] * rightMax[j+1]
+        leftMin[j-1] * A[j] * rightMin[j+1]
+
+ */
+public static int maxProductOfThreeByGPT (int[] A) {
+        int N = A.length;
+        if (N < 3) return 0; // на всякий случай, хотя по условию N >= 3
+
+        // массивы для хранения максимума и минимума слева от позиции i
+        int[] leftMax = new int[N];
+        int[] leftMin = new int[N];
+
+        leftMax[0] = A[0];
+        leftMin[0] = A[0];
+
+        for (int i = 1; i < N; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], A[i]);
+            leftMin[i] = Math.min(leftMin[i - 1], A[i]);
+        }
+
+        // массивы для хранения максимума и минимума справа от позиции i
+        int[] rightMax = new int[N];
+        int[] rightMin = new int[N];
+
+        rightMax[N - 1] = A[N - 1];
+        rightMin[N - 1] = A[N - 1];
+
+        for (int i = N - 2; i >= 0; i--) {
+            rightMax[i] = Math.max(rightMax[i + 1], A[i]);
+            rightMin[i] = Math.min(rightMin[i + 1], A[i]);
+        }
+
+        int maxProduct = Integer.MIN_VALUE;
+
+        // перебираем центральный элемент тройки
+        for (int j = 1; j <= N - 2; j++) {
+            int middle = A[j];
+
+            // четыре варианта комбинаций: (max слева)*(middle)*(max справа) и так далее
+            int prod1 = leftMax[j - 1] * middle * rightMax[j + 1];
+            int prod2 = leftMax[j - 1] * middle * rightMin[j + 1];
+            int prod3 = leftMin[j - 1] * middle * rightMax[j + 1];
+            int prod4 = leftMin[j - 1] * middle * rightMin[j + 1];
+
+            maxProduct = Math.max(maxProduct, Math.max(Math.max(prod1, prod2), Math.max(prod3, prod4)));
+        }
+
+        return maxProduct;
+    }
 }
