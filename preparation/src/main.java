@@ -1,6 +1,7 @@
 import com.sun.jdi.Value;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class main {
     public static void main(String[] args) {
@@ -14,7 +15,9 @@ public class main {
         int [] progression = {12, 4, 6, 8, 10, 2};
         int [] cars = {0,1,1,1,0,0,1};
 
-        System.out.println("passingCars opa: " + passingCars(cars));
+        System.out.println("Sum of distincts: " + distinct(pairedArray));
+
+//        System.out.println("passingCars opa: " + passingCars(cars));
 
 //        System.out.println("permCheck1: " + permCheck(array));
 //        System.out.println("permCheck2: " + permCheck(pairedArray));
@@ -764,4 +767,53 @@ public static int maxProductOfThreeByGPT (int[] A) {
 
         return maxProduct;
     }
+
+    /* Distinct
+Compute number of distinct values in an array.
+Write a function
+    class Solution { public int solution(int[] A); }
+that, given an array A consisting of N integers, returns the number of distinct values in array A.
+For example, given array A consisting of six elements such that:
+ A[0] = 2    A[1] = 1    A[2] = 1
+ A[3] = 2    A[4] = 3    A[5] = 1
+the function should return 3, because there are 3 distinct values appearing in array A, namely 1, 2 and 3.
+Write an efficient algorithm for the following assumptions:
+        N is an integer within the range [0..100,000];
+        each element of array A is an integer within the range [−1,000,000..1,000,000].
+     */
+    public static int distinct (int[] A){
+        return Arrays.stream(A)
+                .boxed()
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    /*
+    A string S consisting of N characters is considered to be properly nested if any of the following conditions is true:
+        S is empty;
+        S has the form "(U)" or "[U]" or "{U}" where U is a properly nested string;
+        S has the form "VW" where V and W are properly nested strings.
+For example, the string "{[()()]}" is properly nested but "([)()]" is not.
+     */
+        public int  Brackets (String S) {
+            Stack<Character> stack = new Stack<>();
+            for (char c : S.toCharArray()) {
+                if (c == '(' || c == '[' || c == '{') {
+                    stack.push(c);
+                } else if (c == ')' || c == ']' || c == '}') {
+                    if (stack.isEmpty()) return 0;
+                    char top = stack.pop();
+                    if (!matches(top, c)) return 0;
+                }
+            }
+            return stack.isEmpty() ? 1 : 0;
+        }
+
+        private boolean matches(char open, char close) {
+            return (open == '(' && close == ')')
+                    || (open == '[' && close == ']')
+                    || (open == '{' && close == '}');
+        }
+
+
 }
