@@ -900,5 +900,34 @@ Find an index of an array such that its value occurs at more than half of indice
 
             return -1;
         }
+    /*
+MaxProfit
+Given a log of stock prices compute the maximum possible earning.
+     */
+
+        public int maxProfit(int[] A) {
+            // Implement your solution here
+            //maximal with highest index - minimal with lowest index
+            int n = A.length;
+            int profit = 0;
+            int buyPrice = 0;
+            int sellPrice = 0;
+
+            for (int i = n-1; i >= 1; i--) {
+                // System.out.println("START: ");
+                // int dif = A[i] - A[i-1];
+                if (sellPrice <  A[i]){
+                    sellPrice = A[i];
+                    buyPrice = A[i-1];
+                }
+                if (profit < sellPrice - A[i-1]) {
+                    buyPrice = A[i-1];
+                    profit = sellPrice - A[i-1];
+                }
+                // System.out.println("sell: " + sellPrice + " buy: " + buyPrice + " prof: " + profit );
+            }
+
+            return profit > 0 ? profit : 0;
+        }
 
 }
