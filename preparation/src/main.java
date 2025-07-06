@@ -9,13 +9,16 @@ public class main {
 //        System.out.println(reverse("i want cookies"));
 //        fizzBuzz(32);
 
-        int[] array = {-123, 10, 12, 1, 2, 3, 4, 5, 5, 6, 6, 7};
+        int[] array = {-123, 10, 12, 1, 2, 3, 4, 5, 5, 6, 6, 7,2,2,2,2,2,2,2,2};
+        int[] array1 = {1,2,3,4,5,6,7,2};
         int[] pairedArray = {2, 2, 8, 8, 5, 6, 6, 7, 5, 7, 8,6};
         int [] missingNrArray = {2, 4, 3, 6, 1, 0};
         int [] progression = {12, 4, 6, 8, 10, 2};
         int [] cars = {0,1,1,1,0,0,1};
 
-        System.out.println("Sum of distincts: " + distinct(pairedArray));
+//        System.out.println("Sum of distincts: " + distinct(pairedArray));
+
+        System.out.println("dominator " + dominator(array1));
 
 //        System.out.println("passingCars opa: " + passingCars(cars));
 
@@ -858,5 +861,44 @@ Initially all the fish are alive and all except fish number 1 are moving upstrea
             return stack.size() + alive;
         }
 
+/*
+ Dominator
+Find an index of an array such that its value occurs at more than half of indices in the array.
+ */
+        public static int dominator (int[] A) {
+            // Implement your solution here
+            //0. find a half
+            //1. stream collect the map <element, amount>
+            //2. compare amounts with a half
+            //3.
+
+            int half = A.length / 2;
+
+            Map <Integer, Long> mapCount = Arrays.stream(A)
+                    .boxed()
+                    .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
+            Integer dominator = null;
+            int domiCounter = 0;
+
+            for (Map.Entry<Integer, Long> entry : mapCount.entrySet()){
+                if (entry.getValue() > half){
+                    domiCounter ++;
+                    if (domiCounter > 1){
+                        return -1;
+                    }
+                    dominator = entry.getKey();
+                }
+            }
+            if (dominator != null ) {
+                for (int j = 0; j < A.length; j++){
+                    if (A[j] == dominator){
+                        return j;
+                    }
+                }
+            }
+
+            return -1;
+        }
 
 }
