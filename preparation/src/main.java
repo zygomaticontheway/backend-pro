@@ -815,5 +815,48 @@ For example, the string "{[()()]}" is properly nested but "([)()]" is not.
                     || (open == '{' && close == '}');
         }
 
+    /* fish
+        If A[P] > A[Q] then P eats Q, and P will still be flowing downstream,
+        If A[Q] > A[P] then Q eats P, and Q will still be flowing upstream.
+We assume that all the fish are flowing at the same speed. That is, fish moving in the same direction never meet. The goal is to calculate the number of fish that will stay alive.
+For example, consider arrays A and B such that:
+  A[0] = 4    B[0] = 0
+  A[1] = 3    B[1] = 1
+  A[2] = 2    B[2] = 0
+  A[3] = 1    B[3] = 0
+  A[4] = 5    B[4] = 0
+Initially all the fish are alive and all except fish number 1 are moving upstream. Fish number 1 meets fish number 2 and eats it, then it meets fish number 3 and eats it too. Finally, it meets fish number 4 and is eaten by it. The remaining two fish, number 0 and 4, never meet and therefore stay alive.
+     */
+
+        public int fish (int[] A, int[] B) {
+            // Implement your solution here
+            Stack<Integer> stack = new Stack<>();
+            int alive = 0;
+
+            if(A.length == 0 || B.length ==0){
+                return 0;
+            }
+
+            for(int i = 0; i < A.length; i++){
+                if (A[i] >=0 || B[i] == 1 || B[i] == 0){
+                    if (B[i] == 1){
+                        stack.push(A[i]);
+                    } else {
+                        while (!stack.isEmpty()){
+                            if (stack.peek() > A[i]){
+                                break;
+                            } else {
+                                stack.pop();
+                            }
+                        }
+                        if (stack.isEmpty()){
+                            alive++;
+                        }
+                    }
+                }
+            }
+            return stack.size() + alive;
+        }
+
 
 }
