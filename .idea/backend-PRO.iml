@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/lesson01/demo20240807_1/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/homework/hw_1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/treyeTech/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/codility/src" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="corretto-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
