@@ -979,6 +979,34 @@ that, given a non-empty array A consisting of N integers, returns the maximal su
 
             return maxDoubleSlice;
         }
+/* CountFactors
+Делители
+Count factors of given number n.
+ */
+    public int сountFactors(int N) {
+        // Implement your solution here
+        // int factorsAmount = 0;
+
+        // for (int x = 1; x <= N; x++){
+        //     if (N % x == 0) {
+        //         factorsAmount++;
+        //     }
+        // }
+// huge numbers
+        List<Integer> factors = new ArrayList<>();
+
+        for (int i = 1; i <= Math.sqrt(N); i++){
+            if (N % i == 0){
+                factors.add(i);
+                if ( i * i != N){
+                    factors.add(N / i);
+                }
+            }
+        }
+
+        return factors.size();
+    }
+
 
 
 }
