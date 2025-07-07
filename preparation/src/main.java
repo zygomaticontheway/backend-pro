@@ -1037,6 +1037,93 @@ Find the minimal perimeter of any rectangle whose area equals N.
 
         return minP;
     }
+/* CountNonDivisible
+Calculate the number of elements of an array that are not divisors of each element.
+Write a function:
+    class Solution { public int[] solution(int[] A); }
+that, given an array A consisting of N integers, returns a sequence of integers representing the amount of non-divisors.
+Result array should be returned as an array of integers.
+ */
+    public int[] countNonDivisible(int[] A) {
+        //Implement your solution here
+        //count non divs for each unique
+        //
+        //put amount to array
+        // 1, self, repeat
+
+        int n = A.length;
+        int counterNonDivs = A.length;
+        int[] arrayCounters= new int [n];
+
+        Set<Integer> uniques = new HashSet<>(Arrays.asList(Arrays.stream(A).boxed().toArray(Integer[] :: new)));
+
+        // System.out.println("uniques " + uniques.toString());
+
+        Map<Integer, Integer> map = uniques.stream()
+                .collect(Collectors.toMap(
+                        u -> u,
+                        u -> (int) Arrays.stream(A)
+                                .filter(x -> u % x != 0)
+                                .count()
+                ));
+        // System.out.println("map " + map.toString());
+
+        for (int i = 0; i < n; i++){
+            arrayCounters[i] = map.get(A[i]);
+        }
+
+        return arrayCounters;
+    }
+
+    class Solution {
+        public int[] countNonDivisibleGPT(int[] A) {
+            int N = A.length;
+            int[] result = new int[N];
+
+            int maxA = Arrays.stream(A).max().getAsInt();
+            int[] count = new int[maxA + 1];
+
+            // считаем сколько раз встречается каждое число
+            for (int num : A) {
+                count[num]++;
+            }
+
+            // для каждого числа посчитаем сколько у него делителей
+            Map<Integer, Integer> divisorsCount = new HashMap<>();
+
+            for (int num : countUnique(A)) {
+                int sumDivisors = 0;
+                int sqrt = (int)Math.sqrt(num);
+
+                for (int i = 1; i <= sqrt; i++) {
+                    if (num % i == 0) {
+                        sumDivisors += count[i];
+                        if (i != num / i) {
+                            sumDivisors += count[num / i];
+                        }
+                    }
+                }
+                divisorsCount.put(num, sumDivisors);
+            }
+
+            // вычисляем неделители
+            for (int i = 0; i < N; i++) {
+                result[i] = N - divisorsCount.get(A[i]);
+            }
+            return result;
+        }
+
+        private Set<Integer> countUnique(int[] A) {
+            Set<Integer> uniques = new HashSet<>();
+            for (int num : A) {
+                uniques.add(num);
+            }
+            return uniques;
+        }
+    }
+
+
+
 
 
 }
