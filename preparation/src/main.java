@@ -930,4 +930,55 @@ Given a log of stock prices compute the maximum possible earning.
             return profit > 0 ? profit : 0;
         }
 
+        /* MaxDoubleSliceSum
+Find the maximal sum of any double slice.
+A non-empty array A consisting of N integers is given.
+A triplet (X, Y, Z), such that 0 ≤ X < Y < Z < N, is called a double slice.
+The sum of double slice (X, Y, Z) is the total of A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1].
+For example, array A such that:
+    A[0] = 3
+    A[1] = 2
+    A[2] = 6
+    A[3] = -1
+    A[4] = 4
+    A[5] = 5
+    A[6] = -1
+    A[7] = 2
+contains the following example double slices:
+        double slice (0, 3, 6), sum is 2 + 6 + 4 + 5 = 17,
+        double slice (0, 3, 7), sum is 2 + 6 + 4 + 5 − 1 = 16,
+        double slice (3, 4, 5), sum is 0.
+The goal is to find the maximal sum of any double slice.
+Write a function:
+    class Solution { public int solution(int[] A); }
+that, given a non-empty array A consisting of N integers, returns the maximal sum of any double slice.
+
+
+         */
+        public int maxDoubleSliceSum(int[] A) {
+            int N = A.length;
+            int[] maxEndingHere = new int[N];
+            int[] maxStartingHere = new int[N];
+
+            // вычисляем максимальные суммы отрезков слева
+            for (int i = 1; i < N - 1; i++) {
+                maxEndingHere[i] = Math.max(0, maxEndingHere[i - 1] + A[i]);
+            }
+
+            // вычисляем максимальные суммы отрезков справа
+            for (int i = N - 2; i > 0; i--) {
+                maxStartingHere[i] = Math.max(0, maxStartingHere[i + 1] + A[i]);
+            }
+
+            // пробуем каждый Y и берём лучший результат
+            int maxDoubleSlice = 0;
+            for (int Y = 1; Y < N - 1; Y++) {
+                int candidate = maxEndingHere[Y - 1] + maxStartingHere[Y + 1];
+                maxDoubleSlice = Math.max(maxDoubleSlice, candidate);
+            }
+
+            return maxDoubleSlice;
+        }
+
+
 }
