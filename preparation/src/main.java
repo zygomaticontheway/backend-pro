@@ -1006,7 +1006,37 @@ Count factors of given number n.
 
         return factors.size();
     }
+/*
+ MinPerimeterRectangle
+Find the minimal perimeter of any rectangle whose area equals N.
+ */
+    public int minPerimeterRectangle (int N) {
+        // Implement your solution here
+        int minP = (1 + N) * 2;
+        int a = 0;
+        int b = 0;
+        // S = a * b
+        // P = 2 * (a + b)
+        //1. find all int sides
+        //2. compare perimeters
 
+        // System.out.println("sqrt " + Math.sqrt(N));
+        // System.out.println("minP " + minP);
+        for (int i = 1; i <= Math.sqrt(N); i++){
+            if (N % i == 0) {
+                a = i;
+                b = N / i;
+                int P = 2 * (a + b);
+
+                if (minP > P) {
+                    minP = P;
+                }
+                // System.out.println("a:  " + a + " b: " + b + " P: " + P + '\n');
+            }
+        }
+
+        return minP;
+    }
 
 
 }
